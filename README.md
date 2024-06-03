@@ -36,9 +36,9 @@ Proyek ini menggunakan dataset harga rumah dari Kaggle. [Housing Price Dataset](
 - prefarea: merupakan jawaban apakah rumah berlokasi di tempat yang strategis. Jawaban adalah yes atau no.
 - furnishingstatus: merupakan status kelengkapan perabotan rumah. Status kelengkapan terdiri dari furnished yang berarti lengkap, semi-furnished yang berarti cukup, dan unfurnished berarti tidak lengkap.
 
-![HouseInfo](https://github.com/filbert-w/ProyekPertamaMachineLearningTerapan/blob/main/house_info.png)
+![HouseInfo](https://github.com/filbert-w/ProyekPertama/assets/114629987/4ff24479-85a6-4a7d-9420-2acf961da994)
 
-![HouseDescribe](https://github.com/filbert-w/ProyekPertamaMachineLearningTerapan/blob/main/house_describe.png)
+![HouseDescribe](https://github.com/filbert-w/ProyekPertama/assets/114629987/19e152e3-a2a7-4ab1-870f-77d34ec84c6b)
 
 Jumlah data adalah sebanyak 545 data.
 Kondisi data adalah bersih dan lengkap ditandai dengan non-null pada semua kolom.
@@ -47,35 +47,35 @@ Mainroad, guestroom, basement, hotwaterheating, airconditioning, prefarea, furni
 
 Berikut adalah persentase untuk masing-masing data kategori:
 
-![Mainroad](https://github.com/filbert-w/ProyekPertamaMachineLearningTerapan/blob/main/mainroad_percentage.png)
+![Mainroad](https://github.com/filbert-w/ProyekPertama/assets/114629987/58532f14-e0b1-4112-bdcf-a85c86142442)
 
-![Guestroom](https://github.com/filbert-w/ProyekPertamaMachineLearningTerapan/blob/main/mainroad_percentage.png)
+![Guestroom](https://github.com/filbert-w/ProyekPertama/assets/114629987/0c79d748-7a22-431f-ba74-dc856fdd1686)
 
-![Basement](https://github.com/filbert-w/ProyekPertamaMachineLearningTerapan/blob/main/basement_percentage.png)
+![Basement](https://github.com/filbert-w/ProyekPertama/assets/114629987/3e6ee070-fc6f-4115-992c-feb6bacdeb74)
 
-![HotWaterHeating](https://github.com/filbert-w/ProyekPertamaMachineLearningTerapan/blob/main/hotwaterheating_percentage.png)
+![HotWaterHeating](https://github.com/filbert-w/ProyekPertama/assets/114629987/08519d12-a8f1-4bbd-a7d7-d49a5f72b0cb)
 
-![AirConditioning](https://github.com/filbert-w/ProyekPertamaMachineLearningTerapan/blob/main/airconditioning_percentage.png)
+![AirConditioning](https://github.com/filbert-w/ProyekPertama/assets/114629987/58d73a06-4f77-4ec5-a780-d7354c009286)
 
-![PrefArea](https://github.com/filbert-w/ProyekPertamaMachineLearningTerapan/blob/main/prefarea_percentage.png)
+![PrefArea](https://github.com/filbert-w/ProyekPertama/assets/114629987/fd750143-407b-4878-99c5-d95a07774e6c)
 
-![FurnishingStatus](https://github.com/filbert-w/ProyekPertamaMachineLearningTerapan/blob/main/furnishingstatus_percentage.png)
+![FurnishingStatus](https://github.com/filbert-w/ProyekPertama/assets/114629987/623918cf-ba38-4342-a482-3209097a12d1)
 
 Berikut adalah histogram dataset:
 
-![Histogram](https://github.com/filbert-w/ProyekPertamaMachineLearningTerapan/blob/main/hist.png)
+![Histogram](https://github.com/filbert-w/ProyekPertama/assets/114629987/f4786a2e-31ef-4e31-b56e-35ef6cc05cef)
 
 Berikut adalah hubungan data kategori dengan harga rumah:
 
-![CategoryAndPrice](https://github.com/filbert-w/ProyekPertamaMachineLearningTerapan/blob/main/category_and_price.png)
+![CategoryAndPrice](https://github.com/filbert-w/ProyekPertama/assets/114629987/b9da8ad4-6a65-4a4d-ad20-dbf156704f1f)
 
 Dapat dilihat bahwa fitur kategori memengaruhi harga rumah.
 
 Berikut adalah pairplot dataset:
-![PairPlot](https://github.com/filbert-w/ProyekPertamaMachineLearningTerapan/blob/main/pairplot.png)
+![PairPlot](https://github.com/filbert-w/ProyekPertama/assets/114629987/cd161321-a061-4fb2-a74e-5fcb7b5cc897)
 
 Berikut adalah correlation matrix untuk fitur numerik:
-![CorrelationMatrix](https://github.com/filbert-w/ProyekPertamaMachineLearningTerapan/blob/main/correlation_matrix.png)
+![CorrelationMatrix](https://github.com/filbert-w/ProyekPertama/assets/114629987/5aa33b1d-cd75-4282-9fa0-5a51549ae1dd)
 
 Dapat dilihat bahwa fitur area dan bathrooms memengaruhi harga rumah.
 
