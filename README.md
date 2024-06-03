@@ -72,9 +72,11 @@ Berikut adalah hubungan data kategori dengan harga rumah:
 Dapat dilihat bahwa fitur kategori memengaruhi harga rumah.
 
 Berikut adalah pairplot dataset:
+
 ![PairPlot](https://github.com/filbert-w/ProyekPertama/assets/114629987/cd161321-a061-4fb2-a74e-5fcb7b5cc897)
 
 Berikut adalah correlation matrix untuk fitur numerik:
+
 ![CorrelationMatrix](https://github.com/filbert-w/ProyekPertama/assets/114629987/5aa33b1d-cd75-4282-9fa0-5a51549ae1dd)
 
 Dapat dilihat bahwa fitur area dan bathrooms memengaruhi harga rumah.
