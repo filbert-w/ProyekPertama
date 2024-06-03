@@ -36,9 +36,36 @@ Proyek ini menggunakan dataset harga rumah dari Kaggle. [Housing Price Dataset](
 - prefarea: merupakan jawaban apakah rumah berlokasi di tempat yang strategis. Jawaban adalah yes atau no.
 - furnishingstatus: merupakan status kelengkapan perabotan rumah. Status kelengkapan terdiri dari furnished yang berarti lengkap, semi-furnished yang berarti cukup, dan unfurnished berarti tidak lengkap.
 
-![HouseInfo](https://github.com/filbert-w/ProyekPertama/assets/114629987/4ff24479-85a6-4a7d-9420-2acf961da994)
+Berikut adalah informasi tentang kelengkapan data dan tipe data. Semua data lengkap ditandai dengan 545 non-null pada setiap kolom.
 
-![HouseDescribe](https://github.com/filbert-w/ProyekPertama/assets/114629987/19e152e3-a2a7-4ab1-870f-77d34ec84c6b)
+| #  | Column           | Non-Null Count | Dtype  |
+|----|------------------|----------------|--------|
+| 0  | price            | 545 non-null   | int64  |
+| 1  | area             | 545 non-null   | int64  |
+| 2  | bedrooms         | 545 non-null   | int64  |
+| 3  | bathrooms        | 545 non-null   | int64  |
+| 4  | stories          | 545 non-null   | int64  |
+| 5  | mainroad         | 545 non-null   | object |
+| 6  | guestroom        | 545 non-null   | object |
+| 7  | basement         | 545 non-null   | object |
+| 8  | hotwaterheating  | 545 non-null   | object |
+| 9  | airconditioning  | 545 non-null   | object |
+| 10 | parking          | 545 non-null   | int64  |
+| 11 | prefarea         | 545 non-null   | object |
+| 12 | furnishingstatus | 545 non-null   | object |
+
+Berikut adalah informasi statistik untuk dataset rumah:
+
+|       |        price |         area |   bedrooms |  bathrooms |    stories | parking    |
+|------:|-------------:|-------------:|-----------:|-----------:|-----------:|------------|
+| count | 5.450000e+02 |   545.000000 | 545.000000 | 545.000000 | 545.000000 | 545.000000 |
+|  mean | 4.766729e+06 |  5150.541284 |   2.965138 |   1.286239 |   1.805505 |   0.693578 |
+|  std  | 1.870440e+06 |  2170.141023 |   0.738064 |   0.502470 |   0.867492 |   0.861586 |
+|  min  | 1.750000e+06 |  1650.000000 |   1.000000 |   1.000000 |   1.000000 |   0.000000 |
+|  25%  | 3.430000e+06 |  3600.000000 |   2.000000 |   1.000000 |   1.000000 |   0.000000 |
+|  50%  | 4.340000e+06 |  4600.000000 |   3.000000 |   1.000000 |   2.000000 |   0.000000 |
+|  75%  | 5.740000e+06 |  6360.000000 |   3.000000 |   2.000000 |   2.000000 |   1.000000 |
+|  max  | 1.330000e+07 | 16200.000000 |   6.000000 |   4.000000 |   4.000000 |   3.000000 |
 
 Jumlah data adalah sebanyak 545 data.
 Kondisi data adalah bersih dan lengkap ditandai dengan non-null pada semua kolom.
