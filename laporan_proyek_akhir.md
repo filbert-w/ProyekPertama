@@ -2,24 +2,24 @@
 
 ## Project Overview
 
-Pada zaman sekarang, sudah banyak film yang tersedia. Hal tersebut menyebabkan perlunya langkah tambahan untuk mencari dan menyaring film-film yang sangat banyak untuk mencari film yang sesuai. Proyek ini bermaksud mempermudah pencarian film yang diinginkan dengan sistem rekomendasi.
+Domain dari proyek ini adalah rekomendasi film dengan pendekatan content-based filtering. Saat membuka aplikasi menonton film, jika melihat list film yang tersedia, terdapat sangat banyak film. Hal ini akan sangat menghabiskan waktu untuk melihat satu per satu film dari list film yang jumlahnya terlalu banyak, sehingga menyebabkan perlunya langkah tambahan untuk mencari dan menyaring film-film yang sangat banyak untuk mencari film yang sesuai dengan preferensi. Dengan diterapkannya model content-based filtering dalam menghasilkan rekomendasi film, proyek ini bermaksud mempermudah pencarian film yang diinginkan dengan merekomendasikan film-film serupa yang dengan satu film yang dipilih user. Dataset yang digunakan dalam proyek ini adalah dataset yang berisi film yang ditayangkan di Netflix. Dengan sistem rekomendasi ini, akan dihasilkan beberapa rekomendasi film yang dianggap serupa dengan film yang dipilih user, sehingga mempermudah user menemukan film yang serupa, dan membantu perusahaan perfilman dalam menyajikan film yang sesuai untuk target pasar.
 
 ## Business Understanding
 
-Aplikasi layanan streaming dengan rekomendasi film yang sesuai akan meningkatkan kepuasan pengguna dan meningkatkan waktu pemakaian aplikasi.
+Aplikasi menonton film dengan rekomendasi film yang tepat akan meningkatkan kepuasan pengguna karena kemudahan dalam menemukan film yang disukai dan meningkatkan waktu pemakaian aplikasi oleh pengguna yang akan menguntungkan perusahaan.
 
 ### Problem Statements
 
-Menjelaskan pernyataan masalah:
-- Berdasarkan data film, bagaimana membuat sistem rekomendasi film yang sesuai?
+- Berdasarkan satu film, bagaimana merekomendasikan beberapa film yang serupa dari seluruh dataset film?
 
 ### Goals
 
-Menjelaskan tujuan proyek yang menjawab pernyataan masalah:
-- Menghasilkan beberapa rekomendasi film berdasarkan karakteristik film dengan pendekatan content-based filtering.
+- Membuat model machine learning dengan pendekatan content-based filtering yang dapat menemukan film yang serupa.
 
 ## Data Understanding
 Proyek ini menggunakan dataset Netflix Movies and TV Shows dari Kaggle. [Netlix Movies and TV Shows](https://www.kaggle.com/datasets/shivamb/netflix-shows).
+
+Tabel 1.
 
 |   | show_id |    type |                 title |        director |                                              cast |       country |         date_added | release_year | rating |  duration |                                         listed_in |                                       description |
 |--:|--------:|--------:|----------------------:|----------------:|--------------------------------------------------:|--------------:|-------------------:|-------------:|-------:|----------:|--------------------------------------------------:|--------------------------------------------------:|
@@ -32,7 +32,7 @@ Proyek ini menggunakan dataset Netflix Movies and TV Shows dari Kaggle. [Netlix 
 Variabel-variabel pada Neflix Movies and TV Shows dataset adalah sebagai berikut:
 
 * show_id : merupakan id dari show di Netflix.
-* type : merupakan jenis show di Netflix, yaitu **Movie** atau **TV Show**.
+* type : merupakan jenis show di Netflix.
 * title : merupakan judul show di Netflix.
 * director : merupakan sutradara dari show di Netflix.
 * cast : merupakan cast dari show di Netflix.
@@ -43,6 +43,8 @@ Variabel-variabel pada Neflix Movies and TV Shows dataset adalah sebagai berikut
 * duration : merupakan durasi show di Netflix.
 * listed_in : merupakan genre dari show di Netflix.
 * description: merupakan deskripsi dari show di Netflix.
+
+Tabel 2.
 
 |  #  |       Column | Non-Null Count |  Dtype |
 |:---:|-------------:|---------------:|-------:|
@@ -61,90 +63,151 @@ Variabel-variabel pada Neflix Movies and TV Shows dataset adalah sebagai berikut
 
 Jumlah data adalah 8807 data. Terdapat beberapa kolom dengan data null yaitu kolom director, cast, country, date_added, rating, dan duration. Sedangkan show_id, type, title, release_year, listed_in, dan description sudah lengkap ditandai dengan **8807 non-null**.
 
+Data unik untuk masing-masing kolom adalah:
+* Jumlah show dalam dataset:  8807
+* Jumlah tipe show dalam dataset:  2
+* Jumlah judul show dalam dataset:  8807
+* Jumlah sutradara dalam dataset:  4529
+* Jumlah cast dalam dataset:  7693
+* Jumlah negara dalam dataset:  749
+* Jumlah tanggal dalam dataset:  1768
+* Jumlah tahun rilis dalam dataset:  74
+* Jumlah rating dalam dataset:  18
+* Jumlah durasi dalam dataset:  221
+* Jumlah genre dalam dataset:  514
+* Jumlah deskripsi dalam dataset:  8775
+
+Tipe show dalam dataset adalah **Movie** dan **TV Show**.
+
+Tahun rilis show dalam dataset adalah 1925, 1942, 1943, 1944, 1945, 1946, 1947, 1954, 1955, 1956, 1958, 1959, 1960, 1961, 1962, 1963, 1964, 1965, 1966, 1967, 1968, 1969, 1970, 1971, 1972, 1973, 1974, 1975, 1976, 1977, 1978, 1979, 1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, dan 2021.
+
+Rating usia dalam dataset adalah PG-13, TV-MA, PG, TV-14, TV-PG, TV-Y, TV-Y7, R, TV-G, G, NC-17, 74 min, 84 min, 66 min, NR, nan, TV-Y7-FV, dan UR.
+
+Pada kolom rating, dapat dilihat terdapat data yang tidak sesuai dengan rating usia.
+
+Durasi dalam dataset terdiri dari yang paling pendek adalah 3 menit dan paling panjang adalah 312 menit, dan season paling sedikit adalah 1 season dan season paling banyak adalah 17 season.
+
+Genre dalam dataset yaitu Documentaries, International TV Shows, TV Dramas, TV Mysteries, Crime TV Shows, TV Action & Adventure, Docuseries, Reality TV, Romantic TV Shows, TV Comedies, TV Horror, Children & Family Movies, Dramas, Independent Movies, International Movies, British TV Shows, Comedies, Spanish-Language TV Shows, Thrillers, Romantic Movies, Music & Musicals, Horror Movies, Sci-Fi & Fantasy, TV Thrillers, Kids' TV, Action & Adventure, TV Sci-Fi & Fantasy, Classic Movies, Anime Features, Sports Movies, Anime Series, Korean TV Shows, Science & Nature TV, Teen TV Shows, Cult Movies, TV Shows, Faith & Spirituality, LGBTQ Movies, Stand-Up Comedy, Movies, Stand-Up Comedy & Talk Shows, Classic & Cult TV.
+
+Genre yang paling banyak dalam dataset adalah Dramas dan Comedies dengan masing-masing berjumlah 79.
+
 ## Data Preparation
+### Penanganan missing value
+Missing value adalah nilai yang tidak terisi pada kolom dalam dataset. Penanganan missing value biasanya dilakukan dengan drop atau diisi dengan rata-rata. Penanganan ini penting agar data yang digunakan dalam pembangunan model bersifat lengkap. Kolom director, cast, country, date_added, rating, dan duration memiliki missing value. Pada proyek ini, kolom yang akan digunakan adalah show_id, type, title, release_year listed_in, description yang tidak memiliki data null.
+
+Tabel 3.
+
+|              |      |
+|--------------|------|
+| show_id      | 0    |
+| type         | 0    |
+| title        | 0    |
+| director     | 2634 |
+| cast         | 825  |
+| country      | 831  |
+| date_added   | 10   |
+| release_year | 0    |
+| rating       | 4    |
+| duration     | 3    |
+| listed_in    | 0    |
+| description  | 0    |
+
 ### Penghapusan stopword
 Stopword adalah karakter yang tidak menambah makna semantik dalam kata atau kalimat. Pada kasus ini akan dilakukan penghapusan stopword pada kolom listed_in. Hal ini akan mempermudah dilakukannya vektorisasi saat menggunakan metode TF-IDF nantinya.
 
-Sebagian besar value dari kolom listed_in berisi genre yang dipisah tanda koma sehingga digunakan split untuk memisahkan genre tersebut berdasarkan tanda koma, kemudian genre tersebut digabungkan kembali menjadi satu string menggunakan join sehingga siap untuk dilakukan fit dengan TF-IDF.
+Sebagian besar value dari kolom listed_in berisi genre yang dipisah tanda koma sehingga digunakan replace untuk mengubah tanda koma menjadi spasi, tetapi sebelum itu spasi pada kolom listed_in diubah menjadi underscore terlebih dahulu agar masing-masing genre terpisah dengan baik. Setelah penghapusan tanda koma, kolom listed_in siap untuk dilakukan fit dengan TF-IDF.
 
-|    0 |                Documentaries |
-|-----:|-----------------------------:|
-|   1  |       International TV Shows |
-|   2  |               Crime TV Shows |
-|   3  |                   Docuseries |
-|   4  |       International TV Shows |
-|  ... |                              |
-| 8802 | Cult Movies                  |
-| 8803 | Kids' TV                     |
-| 8804 | Comedies                     |
-| 8805 | Children &amp; Family Movies |
-| 8806 | Dramas                       |
+Tabel 4.
+
+|      |                                                   |
+|------|---------------------------------------------------|
+| 0    | Documentaries                                     |
+| 1    | International_TV_Shows TV_Dramas TV_Mysteries     |
+| 2    | Crime_TV_Shows International_TV_Shows TV_Actio... |
+| 3    | Docuseries Reality_TV                             |
+| 4    | International_TV_Shows Romantic_TV_Shows TV_Co... |
+| ...  | Cult_Movies Dramas Thrillers                      |
+| 8802 | Cult_Movies Dramas Thrillers                      |
+| 8803 | Kids'_TV Korean_TV_Shows TV_Comedies              |
+| 8804 | Comedies Horror_Movies                            |
+| 8805 | Children_&amp;_Family_Movies Comedies             |
+| 8806 | Dramas International_Movies Music_&amp;_Musicals  |
+
+### Drop pada data duplikat
+Data duplikat adalah data yang sama persis dan berulang. Hal ini bersifat tidak efisien sehingga data duplikat perlu dihapus. Pada kasus ini tidak ditemukan data duplikat, dapat dilihat bahwa data masih tetap berjumlah 8807.
+
+Tabel 5.
+
+|      | show_id |    type |                 title | release_year |                                         listed_in |                                       description |
+|------|--------:|--------:|----------------------:|-------------:|--------------------------------------------------:|--------------------------------------------------:|
+|   0  |      s1 |   Movie |  Dick Johnson Is Dead |         2020 |                                     Documentaries | As her father nears the end of his life, filmm... |
+|   1  |      s2 | TV Show |     Blood &amp; Water |         2021 |     International_TV_Shows TV_Dramas TV_Mysteries | After crossing paths at a party, a Cape Town t... |
+|   2  |      s3 | TV Show |             Ganglands |         2021 | Crime_TV_Shows International_TV_Shows TV_Actio... | To protect his family from a powerful drug lor... |
+|   3  |      s4 | TV Show | Jailbirds New Orleans |         2021 |                             Docuseries Reality_TV | Feuds, flirtations and toilet talk go down amo... |
+|   4  |      s5 | TV Show |          Kota Factory |         2021 | International_TV_Shows Romantic_TV_Shows TV_Co... | In a city of coaching centers known to train I... |
+|  ... |     ... |     ... |                   ... |          ... |                                               ... |                                               ... |
+| 8802 |   s8803 |   Movie |                Zodiac |         2007 |                      Cult_Movies Dramas Thrillers | A political cartoonist, a crime reporter and a... |
+| 8803 |   s8804 | TV Show |           Zombie Dumb |         2018 |              Kids'_TV Korean_TV_Shows TV_Comedies | While living alone in a spooky town, a young g... |
+| 8804 |   s8805 |   Movie |            Zombieland |         2009 |                            Comedies Horror_Movies | Looking to survive in a world taken over by zo... |
+| 8805 |   s8806 |   Movie |                  Zoom |         2006 |             Children_&amp;_Family_Movies Comedies | Dragged from civilian life, a former superhero... |
+| 8806 |   s8807 |   Movie |                Zubaan |         2015 |  Dramas International_Movies Music_&amp;_Musicals | A scrappy but poor boy worms his way into a ty... |
 
 ## Modeling
 Proyek ini menggunakan TfidfVectorizer untuk melakukan vektorisasi terhadap data di kolom listed_in. Pertama akan dilakukan dipanggil TfidfVectorizer, kemudian melakukan fit pada data di kolom listed_in, kemudian melakukan transform pada data di kolom listed_in untuk mengubahnya menjadi matriks.
 
-|                                            title | music | lgbtq | faith |  reality | stand | mysteries |    anime | talk | thrillers |   dramas | ... | adventure | international | musicals | independent |  fi | sci | documentaries |   korean | sports | teen |
-|-------------------------------------------------:|------:|------:|------:|---------:|------:|----------:|---------:|-----:|----------:|---------:|----:|----------:|--------------:|---------:|------------:|----:|----:|--------------:|---------:|-------:|-----:|
-| Inuyasha the Movie - L'isola del fuoco scarlatto |   0.0 |   0.0 |   0.0 | 0.000000 |   0.0 |       0.0 | 0.509902 |  0.0 |  0.000000 | 0.000000 | ... |  0.351247 |      0.196787 |      0.0 |    0.000000 | 0.0 | 0.0 |           0.0 | 0.000000 |    0.0 |  0.0 |
-|                     Sabotage                     |   0.0 |   0.0 |   0.0 | 0.000000 |   0.0 |       0.0 | 0.000000 |  0.0 |  0.000000 | 0.412392 | ... |  0.644179 |      0.000000 |      0.0 |    0.000000 | 0.0 | 0.0 |           0.0 | 0.000000 |    0.0 |  0.0 |
-|                  Slobby's World                  |   0.0 |   0.0 |   0.0 | 0.897424 |   0.0 |       0.0 | 0.000000 |  0.0 |  0.000000 | 0.000000 | ... |  0.000000 |      0.000000 |      0.0 |    0.000000 | 0.0 | 0.0 |           0.0 | 0.000000 |    0.0 |  0.0 |
-|                    Love Alarm                    |   0.0 |   0.0 |   0.0 | 0.000000 |   0.0 |       0.0 | 0.000000 |  0.0 |  0.000000 | 0.000000 | ... |  0.000000 |      0.146923 |      0.0 |    0.000000 | 0.0 | 0.0 |           0.0 | 0.421478 |    0.0 |  0.0 |
-|                Everyday I Love You               |   0.0 |   0.0 |   0.0 | 0.000000 |   0.0 |       0.0 | 0.000000 |  0.0 |  0.000000 | 0.377451 | ... |  0.000000 |      0.330324 |      0.0 |    0.000000 | 0.0 | 0.0 |           0.0 | 0.000000 |    0.0 |  0.0 |
-|                Legends of Strength               |   0.0 |   0.0 |   0.0 | 0.000000 |   0.0 |       0.0 | 0.000000 |  0.0 |  0.000000 | 0.000000 | ... |  0.000000 |      0.000000 |      0.0 |    0.000000 | 0.0 | 0.0 |           0.0 | 0.000000 |    0.0 |  0.0 |
-|                       Troy                       |   0.0 |   0.0 |   0.0 | 0.000000 |   0.0 |       0.0 | 0.000000 |  0.0 |  0.000000 | 0.000000 | ... |  0.000000 |      0.149503 |      0.0 |    0.000000 | 0.0 | 0.0 |           0.0 | 0.000000 |    0.0 |  0.0 |
-|         Money Heist: From Tokyo to Berlin        |   0.0 |   0.0 |   0.0 | 0.000000 |   0.0 |       0.0 | 0.000000 |  0.0 |  0.000000 | 0.000000 | ... |  0.000000 |      0.164402 |      0.0 |    0.000000 | 0.0 | 0.0 |           0.0 | 0.000000 |    0.0 |  0.0 |
-|                   House Arrest                   |   0.0 |   0.0 |   0.0 | 0.000000 |   0.0 |       0.0 | 0.000000 |  0.0 |  0.000000 | 0.000000 | ... |  0.000000 |      0.312817 |      0.0 |    0.612626 | 0.0 | 0.0 |           0.0 | 0.000000 |    0.0 |  0.0 |
-|                    Aapla Manus                   |   0.0 |   0.0 |   0.0 | 0.000000 |   0.0 |       0.0 | 0.000000 |  0.0 |  0.754579 | 0.418956 | ... |  0.000000 |      0.366646 |      0.0 |    0.000000 | 0.0 | 0.0 |           0.0 | 0.000000 |    0.0 |  0.0 |
+Tabel 6.
+
+|                                                title | docuseries |  action_ | up_comedy | lgbtq_movies | _family_movies | up_comedy_ | anime_features | _nature_tv | tv_action_ | comedies | ... | crime_tv_shows | sci | international_tv_shows | independent_movies |   tv_sci |     fi_ | faith_ | romantic_movies | spanish | _cult_tv |
+|-----------------------------------------------------:|-----------:|---------:|----------:|-------------:|---------------:|-----------:|---------------:|-----------:|-----------:|---------:|----:|---------------:|----:|-----------------------:|-------------------:|---------:|--------:|-------:|----------------:|--------:|---------:|
+|                     Pulp Fiction                     |        0.0 | 0.000000 |       0.0 |          0.0 |       0.000000 |        0.0 |            0.0 |        0.0 |   0.000000 | 0.000000 | ... |            0.0 | 0.0 |                    0.0 |                0.0 | 0.000000 | 0.00000 |    0.0 |        0.000000 |     0.0 |      0.0 |
+|                     Wu Assassins                     |        0.0 | 0.000000 |       0.0 |          0.0 |       0.000000 |        0.0 |            0.0 |        0.0 |   0.487893 | 0.000000 | ... |            0.0 | 0.0 |                    0.0 |                0.0 | 0.555583 | 0.42258 |    0.0 |        0.000000 |     0.0 |      0.0 |
+|                        Audible                       |        0.0 | 0.000000 |       0.0 |          0.0 |       0.000000 |        0.0 |            0.0 |        0.0 |   0.000000 | 0.000000 | ... |            0.0 | 0.0 |                    0.0 |                0.0 | 0.000000 | 0.00000 |    0.0 |        0.000000 |     0.0 |      0.0 |
+|        Little Baby Bum: Nursery Rhyme Friends        |        0.0 | 0.000000 |       0.0 |          0.0 |       0.000000 |        0.0 |            0.0 |        0.0 |   0.000000 | 0.000000 | ... |            0.0 | 0.0 |                    0.0 |                0.0 | 0.000000 | 0.00000 |    0.0 |        0.000000 |     0.0 |      0.0 |
+|                      Be Somebody                     |        0.0 | 0.000000 |       0.0 |          0.0 |       0.000000 |        0.0 |            0.0 |        0.0 |   0.000000 | 0.524701 | ... |            0.0 | 0.0 |                    0.0 |                0.0 | 0.000000 | 0.00000 |    0.0 |        0.721712 |     0.0 |      0.0 |
+|       The Most Assassinated Woman in the World       |        0.0 | 0.000000 |       0.0 |          0.0 |       0.000000 |        0.0 |            0.0 |        0.0 |   0.000000 | 0.000000 | ... |            0.0 | 0.0 |                    0.0 |                0.0 | 0.000000 | 0.00000 |    0.0 |        0.000000 |     0.0 |      0.0 |
+|         Zipi &amp; Zape y la Isla del Capitan        |        0.0 | 0.000000 |       0.0 |          0.0 |       0.627428 |        0.0 |            0.0 |        0.0 |   0.000000 | 0.461161 | ... |            0.0 | 0.0 |                    0.0 |                0.0 | 0.000000 | 0.00000 |    0.0 |        0.000000 |     0.0 |      0.0 |
+|                        Unroyal                       |        0.0 | 0.000000 |       0.0 |          0.0 |       0.000000 |        0.0 |            0.0 |        0.0 |   0.000000 | 0.000000 | ... |            0.0 | 0.0 |                    0.0 |                0.0 | 0.000000 | 0.00000 |    0.0 |        0.000000 |     0.0 |      0.0 |
+| Minimalism: A Documentary About the Important Things |        0.0 | 0.000000 |       0.0 |          0.0 |       0.000000 |        0.0 |            0.0 |        0.0 |   0.000000 | 0.000000 | ... |            0.0 | 0.0 |                    0.0 |                0.0 | 0.000000 | 0.00000 |    0.0 |        0.000000 |     0.0 |      0.0 |
+|                     Patriot Games                    |        0.0 | 0.726319 |       0.0 |          0.0 |       0.000000 |        0.0 |            0.0 |        0.0 |   0.000000 | 0.000000 | ... |            0.0 | 0.0 |                    0.0 |                0.0 | 0.000000 | 0.00000 |    0.0 |        0.000000 |     0.0 |      0.0 |
 
 Setelah itu akan digunakan cosine similarity untuk menghitung jarak sudut cosinus antara vektor dalam matriks.
 
-|                                                title | The Devil's Mistress | ... | Henry Danger | Hiroshima: The Real History | Guillermo Vilas: Settling the Score |
-|-----------------------------------------------------:|---------------------:|----:|-------------:|----------------------------:|------------------------------------:|
-|                Jim Gaffigan: King Baby               |             0.000000 | ... |     0.000000 |                    0.000000 |                            0.000000 |
-|                     Centaurworld                     |             0.000000 | ... |     1.000000 |                    0.000000 |                            0.000000 |
-|                     Breaking Free                    |             0.371555 | ... |     0.000000 |                    0.447165 |                            0.495791 |
-|                   Girl from Nowhere                  |             0.241111 | ... |     0.493435 |                    0.000000 |                            0.048015 |
-|                  The Legend of Korra                 |             0.000000 | ... |     0.610035 |                    0.000000 |                            0.000000 |
-| Club de Cuervos Presents: The Ballad of Hugo Sánchez |             0.086854 | ... |     0.486401 |                    0.000000 |                            0.039880 |
-|                    Ordinary World                    |             0.193646 | ... |     0.130745 |                    0.000000 |                            0.000000 |
-|                   Alive and Kicking                  |             0.000000 | ... |     0.000000 |                    1.000000 |                            0.482193 |
-|                   High Flying Bird                   |             0.404239 | ... |     0.000000 |                    0.000000 |                            0.746888 |
-|                    Shadow and Bone                   |             0.115594 | ... |     0.417743 |                    0.000000 |                            0.000000 |
+Tabel 7.
+
+|                               title | Bulbul Can Sing | Ice Fantasy | Where the Money Is | Errementari: The Blacksmith and the Devil | Colin Quinn: The New York Story |
+|------------------------------------:|----------------:|------------:|-------------------:|------------------------------------------:|--------------------------------:|
+|               Puerta 7              |           0.000 |    0.092207 |           0.000000 |                                       0.0 |                        0.000000 |
+|               Spice Up              |           0.000 |    0.127848 |           0.000000 |                                       0.0 |                        0.000000 |
+|     Ari Shaffir: Double Negative    |           0.000 |    0.000000 |           0.000000 |                                       0.0 |                        0.299901 |
+|       Chronically Metropolitan      |           0.746 |    0.000000 |           0.433418 |                                       0.0 |                        0.000000 |
+|             My Holo Love            |           0.000 |    0.109378 |           0.000000 |                                       0.0 |                        0.000000 |
+|              Good Girls             |           0.000 |    0.000000 |           0.000000 |                                       0.0 |                        0.000000 |
+|               42 Grams              |           0.000 |    0.000000 |           0.000000 |                                       0.0 |                        0.000000 |
+| 100 Things to do Before High School |           0.000 |    0.000000 |           0.000000 |                                       0.0 |                        0.000000 |
+|          The Legend of 420          |           0.000 |    0.000000 |           0.000000 |                                       0.0 |                        0.000000 |
+|           Surviving Death           |           0.000 |    0.000000 |           0.000000 |                                       0.0 |                        0.000000 |
 
 Setelah itu, model akan dibangun dengan menerima input judul movie, matriks cosinus similarity, kolom data movie, dan k sebagai jumlah rekomendasi. Kemudian model akan memilih k rekomendasi dengan similarity terbesar.
 
-```
-def movie_recommendations(show_title, similarity_data=cosine_sim_df, items=data[['show_id', 'show_type', 'title', 'listed_in', 'description']], k=5):
-    # Mengambil data dengan menggunakan argpartition untuk melakukan partisi secara tidak langsung sepanjang sumbu yang diberikan
-    # Dataframe diubah menjadi numpy
-    # Range(start, stop, step)
-    index = similarity_data.loc[:,show_title].to_numpy().argpartition(
-        range(-1, -k, -1))
-
-    # Mengambil data dengan similarity terbesar dari index yang ada
-    closest = similarity_data.columns[index[-1:-(k+2):-1]]
-
-    # Drop show_title agar nama show yang dicari tidak muncul dalam daftar rekomendasi
-    closest = closest.drop(show_title, errors='ignore')
-
-    return pd.DataFrame(closest).merge(items).head(k)
-```
-
 Model dapat mendapatkan rekomendasi dengan memasukkan judul movie sebagai parameter.
 
-```
-movie_recommendations("Inuyasha the Movie - L'isola del fuoco scarlatto")
-```
+Tabel 8. Contoh film untuk menjadi input model.
 
-Berikut adalah rekomendasi movie yang mirip dengan Inuyasha the Movie - L'isola del fuoco scarlatto menurut model:
+|      | show_id |  type |                                            title | release_year |                                             listed_in |                                       description |
+|------|--------:|------:|-------------------------------------------------:|-------------:|------------------------------------------------------:|--------------------------------------------------:|
+| 7088 |   s7089 | Movie | Inuyasha the Movie - L'isola del fuoco scarlatto |         2004 | Action_&amp;_Adventure Anime_Features Internationa... | Ai, a young half-demon who has escaped from Ho... |
 
-|   |                                             title | show_id | show_type |                                           listed_in |                                       description |
-|--:|--------------------------------------------------:|--------:|----------:|----------------------------------------------------:|--------------------------------------------------:|
-| 0 | InuYasha: The Movie 2: The Castle Beyond the L... |   s7091 |     Movie | Action &amp; Adventure Anime Features Internatio... | With their biggest foe seemingly defeated, Inu... |
-| 1 | InuYasha the Movie 2: The Castle Beyond the Lo... |     s52 |     Movie | Action &amp; Adventure Anime Features Internatio... | With their biggest foe seemingly defeated, Inu... |
-| 2 | InuYasha the Movie 3: Swords of an Honorable R... |     s53 |     Movie | Action &amp; Adventure Anime Features Internatio... | The Great Dog Demon beaqueathed one of the Thr... |
-| 3 | InuYasha the Movie: Affections Touching Across... |     s55 |     Movie | Action &amp; Adventure Anime Features Internatio... | A powerful demon has been sealed away for 200 ... |
-| 4 |      Naruto Shippûden the Movie: The Will of Fire |     s59 |     Movie | Action &amp; Adventure Anime Features Internatio... | When four out of five ninja villages are destr... |
+Contohnya jika model menerima input Inuyasha the Movie - L'isola del fuoco scarlatto, maka rekomendasi menurut model yaitu:
+
+Tabel 9. Rekomendasi film menurut model.
+
+|   |                                             title | show_id |  type | release_year |                                             listed_in |                                       description |
+|---|--------------------------------------------------:|--------:|------:|-------------:|------------------------------------------------------:|--------------------------------------------------:|
+| 0 | Inuyasha the Movie - La spada del dominatore d... |   s7090 | Movie |         2003 | Action_&amp;_Adventure Anime_Features Internationa... | The Great Dog Demon beaqueathed one of the Thr... |
+| 1 |   InuYasha the Movie 4: Fire on the Mystic Island |     s54 | Movie |         2004 | Action_&amp;_Adventure Anime_Features Internationa... | Ai, a young half-demon who has escaped from Ho... |
+| 2 | InuYasha the Movie 3: Swords of an Honorable R... |     s53 | Movie |         2003 | Action_&amp;_Adventure Anime_Features Internationa... | The Great Dog Demon beaqueathed one of the Thr... |
+| 3 | InuYasha the Movie: Affections Touching Across... |     s55 | Movie |         2001 | Action_&amp;_Adventure Anime_Features Internationa... | A powerful demon has been sealed away for 200 ... |
+| 4 |          Naruto Shippuden the Movie: Blood Prison |     s57 | Movie |         2011 | Action_&amp;_Adventure Anime_Features Internationa... | Mistakenly accused of an attack on the Fourth ... |
 
 ## Evaluation
-Proyek ini menggunakan metrik cosine similarity. Cosine similarity adalah metrik untuk melihat kemiripan antara dua objek dengan menghitung sudut cosinus antara dua vektor. Semakin kecil jaraknya maka dua objek tersebut semakin mirip. Berdasarkan hasil prediksi model, model berhasil merekomendasikan movie dengan genre yang serupa.
+Proyek ini menggunakan metrik precision. Precision mengukur proporsi antara genre dari film rekomendasi yang sama dengan genre dari film input dengan jumlah rekomendasi. Misal untuk hasil prediksi pada tabel 9, dapat dilihat bahwa semua rekomendasi memiliki genre yang sama dengan input model, sehingga memiliki presisi 5/5 atau 100%. Model berhasil memberikan rekomendasi film yang serupa berdasarkan satu film dengan akurasi yang tinggi.
