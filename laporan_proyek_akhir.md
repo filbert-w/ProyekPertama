@@ -210,4 +210,4 @@ Tabel 9. Rekomendasi film menurut model.
 | 4 |          Naruto Shippuden the Movie: Blood Prison |     s57 | Movie |         2011 | Action_&amp;_Adventure Anime_Features Internationa... | Mistakenly accused of an attack on the Fourth ... |
 
 ## Evaluation
-Proyek ini menggunakan metrik precision. Precision mengukur proporsi antara genre dari film rekomendasi yang sama dengan genre dari film input dengan jumlah rekomendasi. Misal untuk hasil prediksi pada tabel 9, dapat dilihat bahwa semua rekomendasi memiliki genre yang sama dengan input model, sehingga memiliki presisi 5/5 atau 100%. Model berhasil memberikan rekomendasi film yang serupa berdasarkan satu film dengan akurasi yang tinggi.
+Proyek ini menggunakan metrik precision. Precision mengukur proporsi antara genre dari film rekomendasi yang sama dengan genre dari film input dengan jumlah rekomendasi. Misal untuk hasil prediksi pada Tabel 9, dapat dilihat bahwa semua rekomendasi memiliki genre yang sama dengan input model, sehingga memiliki presisi 5/5 atau 100%. Model berhasil memberikan rekomendasi film yang serupa berdasarkan satu film dengan akurasi yang tinggi.
